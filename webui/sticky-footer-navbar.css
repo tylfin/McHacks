@@ -41,8 +41,8 @@ code {
 
 .navbar-brand,
 .navbar-nav li a {
-    line-height: 150px;
-    height: 150px;
+    line-height: 100px;
+    height: 100px;
     padding-top: 0;
 }
 .btn-file {
