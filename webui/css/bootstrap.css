@@ -3730,7 +3730,13 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .navbar-fixed-top {
   top: 0;
   border-width: 0 0 1px;
+  height: 300px; /* ATTEMPT AT FIXING THIS*/
 }
+}
+.navbar-header {
+  height: 300px; /* ATTEMPT AT FIXING THIS*/
+}
+
 .navbar-fixed-bottom {
   bottom: 0;
   margin-bottom: 0;

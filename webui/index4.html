@@ -8,16 +8,14 @@
     <meta name="author" content="">
     <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 
-    <title>MIDI SONG</title>
+    <title>MIDISONG</title>
 
     <!-- Bootstrap core CSS -->
     <link href="./css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap theme -->
-    <link href="./css/bootstrap-theme.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="theme.css" rel="stylesheet">
-    <link href="style.css" rel="stylesheet"> <!--For custom fixed footer-->
+    <link href="sticky-footer-navbar.css" rel="stylesheet">
+
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
@@ -28,61 +26,49 @@
     <![endif]-->
   </head>
 
-  <body role="document">
+  <body>
 
     <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#">MIDISONG</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#music"><span class="glyphicon glyphicon-music"></span></a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
 
-    <div class="container theme-showcase" role="main">
-
-      <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron">
-        <h1>MIDISONG</h1>
-        <p>Upload some music here and it will output some bullshit</p>
-        <p><a href="#" class="btn btn-primary btn-lg" role="button">Learn more &raquo;</a></p>
+    <!-- Begin page content -->
+    <div class="container">
+      <div class="page-header">
+        <h1>Computer Generated Music</h1>
       </div>
-    </div> <!-- /container -->
-
-    <div class="page-header">
-      <div class="container">
-        <h1>Choose your file from dropbox</h1>
-        <p>place the picker here</p>
-        var button = Dropbox.createChooseButton(options);
-        document.getElementById("container").appendChild(button);
-      </div>
-      </div>
+      <center>
+      <p class="lead">Upload a MIDI file here, MIDISONG will generate and output a music file
+      <BR>
+      <span class="btn btn-default btn-file">
+        Browse <input type="file">
+      </span>
+      </center>
+    </div>
 
     <div id="footer">
       <div class="container">
-        <p class="muted credit">Created for McHacks 2014 <a href="http://martinbean.co.uk">Tyler Finethy</a> and <a href="http://ryanfait.com/sticky-footer/">Chris Kowal</a>.</p>
+        <p class="text-muted">Created for McHacks 2014</p>
       </div>
     </div>
+
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="./js/bootstrap.min.js"></script>
-    <script src="./js/docs.min.js"></script>
-    <script type="text/javascript" src="https://www.dropbox.com/static/api/2/dropins.js" id="dropboxjs" data-app-key="3iy9lg8tkjkwvu6"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
   </body>
 </html>
