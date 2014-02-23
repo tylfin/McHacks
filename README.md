@@ -13,11 +13,17 @@ Add more stuff when Hack is nearing completion.
 # Dependencies
 
 Clefer music requires the following modules:
+
 -Flask
+
 -Zen
+
 -Matplotlib
+
 -Scipy
+
 -Numpy
+
 -Music21
 
 
