@@ -11,13 +11,14 @@ from subprocess import Popen, PIPE, STDOUT
 import subprocess
 
 # Initialize the Flask application
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="/static")
 
 #APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 #UPLOAD_FOLDER = os.path.join(APP_ROOT, '/upload')
 #app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # This is the path to the upload directory
 app.config['UPLOAD_FOLDER'] = './upload/'
+app.config['STATIC_FOLDER'] = './static/'
 # These are the extension that we are accepting to be uploaded
 app.config['ALLOWED_EXTENSIONS'] = set(['midi', 'mid'])
 
@@ -73,6 +74,11 @@ mv test.mp3 static"""])
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'],
                                filename)
+                               
+@app.route('/static/<filename>')
+def static_file(filename):
+    return app.send_static_file(app.config['STATIC_FOLDER'],
+                              filename)
 
 if __name__ == '__main__':
     app.run(
