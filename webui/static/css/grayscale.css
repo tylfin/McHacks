@@ -284,17 +284,17 @@ a:focus {
 }
 
 .btn-default {
-    border: 1px solid #28c3ab;
-    color: #28c3ab;
+    border: 1px solid #ffffff;
+    color: #ffffff;
     background-color: transparent;
 }
 
 .btn-default:hover,
 .btn-default:focus {
-    border: 1px solid #28c3ab;
+    border: 1px solid #ffffff;
     outline: 0;
     color: #000;
-    background-color: #28c3ab;
+    background-color: #ffffff;
 }
 
 .btn-huge {
@@ -353,6 +353,25 @@ body {
     overflow: hidden;
 }
 .btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 999px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+.btn-submit {
+    position: relative;
+    overflow: hidden;
+}
+.btn-submit input[value=Upload] {
     position: absolute;
     top: 0;
     right: 0;
