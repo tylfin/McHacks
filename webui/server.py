@@ -7,6 +7,8 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from werkzeug import secure_filename
 from app import *
+from subprocess import Popen, PIPE, STDOUT
+import subprocess
 
 # Initialize the Flask application
 app = Flask(__name__)
@@ -50,6 +52,13 @@ def upload():
                                 #filename=filename))
 	r=RandomGenerator("./upload/" +str(filename))
 	r.writeMidToFile()
+	subprocess.Popen(["bash", "-c", """fluidsynth -F output.wav font.sf2 test.mid
+lame --preset standard output.wav test.mp3
+chmod 755 test.mp3
+cd static
+rm test.mp3
+cd ../
+mv test.mp3 static"""])
 	return redirect("/static/player.html")
 	
 
@@ -68,7 +77,7 @@ def uploaded_file(filename):
 if __name__ == '__main__':
     app.run(
         host="0.0.0.0",
-        port=int("9091"),
+        port=int("8080"),
         debug=True
     )
 
