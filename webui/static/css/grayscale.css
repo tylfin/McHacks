@@ -184,6 +184,22 @@ a:focus {
     color: #fff;
     background: rgba(255,255,255,.1);
 }
+.btn-circle2 {
+    width: 150px;
+    height: 150px;
+    margin-top: 15px;
+    padding: 7px 16px;
+    border: 0px solid #000;
+    border-radius: 35px;
+    font-size: 70px;
+    color: #ffffff;
+    background: 0 0;
+    -webkit-transition: background .3s ease-in-out;
+    -moz-transition: background .3s ease-in-out;
+    transition: background .3s ease-in-out;
+}
+
+
 
 .page-scroll .btn-circle i.animated {
     -webkit-transition-property: -webkit-transform;
