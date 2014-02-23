@@ -172,7 +172,6 @@ def parseInput():
 
 def main():
     r = RandomGenerator('moonlight.mid')
-    r.randomGenerator()
     r.writeMidToFile()
 
 
