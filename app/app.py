@@ -8,6 +8,7 @@ import scipy
 import optparse
 import math
 import Queue
+import copy
 
 class NotYetImplemented(Exception):
     def __init__(self):
@@ -15,12 +16,14 @@ class NotYetImplemented(Exception):
 
 
 class RandomGenerator():
-    def __init__(self,parts):
-        self.parts = parts
+    def __init__(self,filename):
+        score = converter.parse(filename)
+        self.s = score
+        self.parts = self.s[0].voicesToParts()
         self.items = []
         for i in range(len(self.parts)):
-            for j in range(len(parts[i])):
-                self.items.append(parts[i][j])
+            for j in range(len(self.parts[i])):
+                self.items.append(self.parts[i][j])
         self.dict = {}
         self.noteInformation = []
         self.G = zen.Graph()
@@ -30,11 +33,14 @@ class RandomGenerator():
         self.outputstream = stream.Stream()
         
         self.reverseDict = {}
+        
         #building orderedArrayOfNames
         for i in range(len(self.items)):
             try:
                 self.orderedArrayOfNames.append(self.items[i].nameWithOctave)
             except:
+                #if (self.items[i].isRest):
+                    #None
                 self.orderedArrayOfNames.append(self.items[i].fullName)
         
         #BUILDING DICTIONARY.
@@ -47,7 +53,8 @@ class RandomGenerator():
                     self.reverseDict[self.items[i].nameWithOctave] = self.items[i]
                 except AttributeError:
                     try:
-                        self.dict[self.items[i].fullName] = self.dict[self.items[i].fullName]+1 
+                        self.dict[self.items[i].fullName] = self.dict[self.items[i].fullName]+1
+                         
                     except:
                         self.dict[self.items[i].fullName] = 1
                         self.reverseDict[self.items[i].fullName] = self.items[i]
@@ -66,7 +73,9 @@ class RandomGenerator():
             
         self.buildRandomEdges()
             
-
+    def printOrderedArray(self):
+        for i in range(len(self.orderedArrayOfNames)-1):
+            print self.orderedArrayOfNames[i]
             
     def buildRandomEdges(self):
         weightProbability = 0
@@ -75,15 +84,25 @@ class RandomGenerator():
                 if self.dict[self.orderedArrayOfNames[i+1]] < 10:
                     weightProbability = un(0,1)
                 elif self.dict[self.orderedArrayOfNames[i+1]] < 100:
-                    weightProbability = un(.6,1)
+                    weightProbability = un(.5,1)
                 else:
                     weightProbability = un(.9,1)
+                
+                if (self.reverseDict[self.orderedArrayOfNames[i+1]].isChord):
+                    weightProbability = 1
+                
+                #print self.reverseDict[self.orderedArrayOfNames[i+1]]
+                
+                #if (self.reverseDict[self.orderedArrayOfNames[i+1]].isRest):
+                    #weightProbability = 0
                     
+                #print self.orderedArrayOfNames[i],self.orderedArrayOfNames[i+1]
                 self.G.add_edge(self.orderedArrayOfNames[i],self.orderedArrayOfNames[i+1])
                 self.G.set_weight(self.orderedArrayOfNames[i],self.orderedArrayOfNames[i+1],weightProbability)
             except zen.exceptions.ZenException:
-                self.G.rm_edge(self.orderedArrayOfNames[i],self.orderedArrayOfNames[i+1])
-                           
+            #except AttributeError:
+                #print self.orderedArrayOfNames[i],self.orderedArrayOfNames[i+1]
+                None
         
     def randomGenerator(self):
         startingNode = self.orderedArrayOfNames[int(un(0,len(self.orderedArrayOfNames)))]
@@ -94,14 +113,22 @@ class RandomGenerator():
         for nodes in self.G.nodes():
             q.put(nodes)
         self.outputstream.append(self.reverseDict[startingNode])
+        
+        i = 0
+        
         while (not q.empty()):
             node = q.get()
             for neighbor in self.G.neighbors(node):
                 if (self.G.weight(node,neighbor) > un(0,1)):
                     try:
-                        self.outputstream.append(self.reverseDict[neighbor])
+                        self.outputstream.insert(i,self.reverseDict[neighbor])
+                        i = i + un(0,1)
+                        q.put(neighbor)
                     except:
-                        None
+                        self.outputstream.insert(i,copy.deepcopy(self.reverseDict[neighbor]))
+                        i = i + un(0,1)
+                    
+            
         
         return self.outputstream
     
@@ -119,30 +146,35 @@ class RandomGenerator():
     def printGraph(self):
         print self.G.nodes()
         print self.G.edges()
-            
+    
+    def writeMidToFile(self):
+        self.randomGenerator()
+        mf = midi.translate.streamToMidiFile(self.outputstream)
+        mf.open('test.mid', 'wb')
+        mf.write()
+        mf.close()
+        
+        
+    def showOutput(self):
+        self.outputstream.show('text')
+        
+    
+        
 
+    
 def parseInput():
     parser = optparse.OptionParser('usage%prog + -f <MIDI FILE>')
     parser.add_option("-f", "--file", type="string", dest="filename", help="Name of file")
     (options, args) = parser.parse_args()
     fileName = options.filename
     return fileName
-    
-def writeMidToFile(s):
-    mf = midi.translate.streamToMidiFile(s)
-    mf.open('test.mid', 'wb')
-    mf.write()
-    mf.close()
-    
-def runMusicGenerator(s):
-    parts = s[0].voicesToParts()
-    r = RandomGenerator(parts)
-    return r.randomGenerator()
 
 
 def main():
-    score = converter.parse('moonlight.mid')
-    randomScore = runMusicGenerator(score)
+    r = RandomGenerator('moonlight.mid')
+    r.randomGenerator()
+    r.writeMidToFile()
+
 
 if __name__ == "__main__":
     main()
