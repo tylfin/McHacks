@@ -1,3 +1,5 @@
+# Clefer Music
+
 ![alt tag](http://i.imgur.com/nvplrZQ.jpg) 
 
 Repository for McGill's McHack Hackathon.
