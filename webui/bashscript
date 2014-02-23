@@ -1,0 +1,3 @@
+fluidsynth -F output.wav font.sf2 file.mid\nlame--preset standard output.wav test.mp3\nchmod 755 test.mp3\ncd static\nrm test.mp3\ncd ../\nmv test.mp3 static
+
+
