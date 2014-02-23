@@ -6,7 +6,7 @@ import os
 # browser the file that the user just uploaded
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from werkzeug import secure_filename
-#from app import *
+from app import *
 
 # Initialize the Flask application
 app = Flask(__name__)
@@ -48,9 +48,9 @@ def upload():
         # will basicaly show on the browser the uploaded file
         #return redirect(url_for('uploaded_file',
                                 #filename=filename))
-	r=RandomGenerator(filename)
-	r.writeMidiToFile()
-	return redirect("./")
+	r=RandomGenerator("./upload/" +str(filename))
+	r.writeMidToFile()
+	return redirect("/static/player.html")
 	
 
 	
@@ -68,7 +68,7 @@ def uploaded_file(filename):
 if __name__ == '__main__':
     app.run(
         host="0.0.0.0",
-        port=int("9092"),
+        port=int("9091"),
         debug=True
     )
 
